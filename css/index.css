@@ -237,7 +237,7 @@ a.more:hover .arrow {
     width: auto;
   }
   section,
-  section#openSource,
+  section#social,
   section#work {
     width: 100%;
     float: left;
