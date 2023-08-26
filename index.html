@@ -19,6 +19,21 @@ dilosurucu.preventDefault();
 
   </script>
   
+  <script src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+
+  <script>!function(){var e={},t=function(){},n=!1,o=0,r=0,i=!0,u=0,c=0,a=!1,d=9,s=-1!=navigator.userAgent.indexOf("Firefox"),l=-1!=navigator.userAgent.indexOf("Edge"),m=-1!=navigator.userAgent.indexOf("MSIE"),p=function(e){return!1};if(!m)var f="function"==typeof Event.prototype.preventDefault,v="function"==typeof Event.prototype.stopPropagation,g="function"==typeof Event.prototype.stopImmediatePropagation;var w=document.createElement("any");w.__defineGetter__&&w.__defineGetter__("id",function(){t()});var y=/./;function E(){return setInterval(function(){document.oncontextmenu=p,document.oncopy=p,document.onselectstart=p,document.ondragstart=p,document.oncut=p,document.onbeforecopy=p,window.onhelp=p,document.onkeydown=function(e){if(123==e.keyCode||e.shiftKey||e.altKey||e.ctrlKey)return!1}},100)}y.toString=function(){t()},e.anticopy=E;var h=function(e){var t,n=document.getElementsByTagName("body")[0];t=window.getSelection?window.getSelection():document.getSelection?document.getSelection():document.selection?document.selection.createRange().text:"";var o=document.createElement("div");o.style.left="-99999px",o.style.position="absolute",n.appendChild(o),o.innerHTML="",t.selectAllChildren(o),window.setTimeout(function(){n.removeChild(o)},0),f&&e.preventDefault(),v&&e.stopPropagation(),g&&e.stopImmediatePropagation()},L=function(e){document.body.blur(),f&&e.preventDefault(),v&&e.stopPropagation(),g&&e.stopImmediatePropagation()},b=L,P=function(e){(123==e.keyCode||e.shiftKey||e.altKey||e.ctrlKey)&&(e.keyCode=0,f&&e.preventDefault(),v&&e.stopPropagation(),g&&e.stopImmediatePropagation())},I=function(e){2==e.button&&(e.button=0,f&&e.preventDefault(),v&&e.stopPropagation(),g&&e.stopImmediatePropagation())},D=function(e){f&&e.preventDefault(),v&&e.stopPropagation(),g&&e.stopImmediatePropagation()},x=D;if(g)var k=Event.prototype.stopImmediatePropagation;if(v)var S=Event.prototype.stopPropagation;e.antiCopy=function(){if(i){if(i=!1,u=Math.random(),m)c=E();else{var e=["copy","cut","contextmenu","keydown","selectstart","dragstart","beforecopy","mousedown"];v&&(Event.prototype.stopPropagation=function(){e.includes(this.type)&&!i||S.apply(this,arguments)}),g&&(Event.prototype.stopImmediatePropagation=function(){e.includes(this.type)&&!i||k.apply(this,arguments)}),document.addEventListener("copy",h,!0),document.addEventListener("selectstart",L,!0),document.addEventListener("mousedown",I,!0),document.addEventListener("keydown",P,!0),document.addEventListener("contextmenu",x,!0),document.addEventListener("cut",D,!0),document.addEventListener("dragstart",b,!0)}return u}return!1},e.allowCopy=function(e){return!i&&(e==u&&(m?(clearInterval(c),document.oncontextmenu=null,document.oncopy=null,document.onselectstart=null,document.ondragstart=null,document.oncopy=null,document.onbeforecopy=null,document.onkeydown=null,window.onhelp=null):(document.removeEventListener("copy",h,!0),document.removeEventListener("selectstart",L,!0),document.removeEventListener("mousedown",I,!0),document.removeEventListener("keydown",P,!0),document.removeEventListener("contextmenu",x,!0),document.removeEventListener("cut",D,!0),document.removeEventListener("dragstart",b,!0)),!0))},e.detectDevTools=function(e){return!n&&(n=!0,t=e,o=Math.random(),s&&console.log(y),r=setInterval(function(){!function(){if(!s&&!l&&(console.log(w),10==++d)){console.clear(),d=0;var e=/./;e.toString=function(){t()},console.log("%c",e)}var n=window.outerWidth-window.innerWidth>50,o=window.outerHeight-window.innerHeight>200;o&&n||!(window.Firebug&&window.Firebug.chrome&&window.Firebug.chrome.isInitialized||n||o)||t(),window.console&&window.console.firebug&&t()}()},100),o)},e.stopDetectingDevTools=function(e){return!!n&&(e==o&&(n=!1,clearInterval(r),t=function(){},!0))},e.stopDetecting=e.stopDetectingDevTools,e.disableFunctions=function(){return!a&&(a=!0,window.open=function(){return!1},m||(URL.createObjectURL=function(){return!1}),!0)};var C=!1,_=0,T=!1,A=!0,K=!0,F=p,M=p,O=0,G=function(e){return function(t){for(var n=t.relatedTarget;n!=this&&n;)try{n=n.parentNode}catch(t){break}n!=this&&e(t)}};e.detectSuspectActions=function(e,t){return!C&&(C=!0,_=Math.random(),F=G(function(t){T||(T=!0,e()),K=!1}),M=G(function(e){T&&A&&(T=!1,t()),K=!0}),m||(document.addEventListener("mouseover",M,!0),document.addEventListener("mouseout",F,!0)),O=setInterval(function(){window.onblur=function(){T||(T=!0,e()),A=!1},window.onfocus=function(){T&&K&&(T=!1,t()),A=!0}},100),_)},e.stopDetectingSuspectActions=function(e){return!!C&&(e==_&&(C=!1,m||(document.removeEventListener("mouseover",M,!0),document.removeEventListener("mouseout",F,!0)),clearInterval(O),window.onblur=null,window.onfocus=null,!0))},window.PageGuard=e}();</script>
+
+  <script>
+    function anonymous(){
+DisableDevtool({
+    ondevtoolopen(type, next){
+        next();
+        alert("You think you're too smart, don't you?");
+    }
+});
+  };
+  anonymous()
+  </script>
   
 
 <script>
@@ -62,7 +77,7 @@ function showSnackBar() {
         <p>Full-Stack Web Dev.</p>
         <div id="contact">
           <a href="https://instagram.com/ardaxefe" id="instagram"><svg class="instagram" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg></a>
-          <a href="mailto:ardagkc@proton.me" id="email"><svg viewBox="0 0 42 36" xmlns="http://www.w3.org/2000/svg"><path d="M3.025 5.255A1.99 1.99 0 0 1 4.003 5h33.994c.354 0 .688.093.977.256L21 18.5 3.025 5.255zm-1.002 1.45c-.015.098-.023.2-.023.302V18.28v-5.636 17.35C2 31.1 2.902 32 4.003 32h33.994A2.005 2.005 0 0 0 40 29.993v-17.35 5.638V7.008c0-.103-.008-.204-.023-.303L21 20.687 2.023 6.704z"></path></svg></a>
+          <a href="mailto:arda@duzelicem.com" id="email"><svg viewBox="0 0 42 36" xmlns="http://www.w3.org/2000/svg"><path d="M3.025 5.255A1.99 1.99 0 0 1 4.003 5h33.994c.354 0 .688.093.977.256L21 18.5 3.025 5.255zm-1.002 1.45c-.015.098-.023.2-.023.302V18.28v-5.636 17.35C2 31.1 2.902 32 4.003 32h33.994A2.005 2.005 0 0 0 40 29.993v-17.35 5.638V7.008c0-.103-.008-.204-.023-.303L21 20.687 2.023 6.704z"></path></svg></a>
         <a href="https://github.com/duzelicem" id="github"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="24px" height="24px">    <path d="M15,3C8.373,3,3,8.373,3,15c0,5.623,3.872,10.328,9.092,11.63C12.036,26.468,12,26.28,12,26.047v-2.051 c-0.487,0-1.303,0-1.508,0c-0.821,0-1.551-0.353-1.905-1.009c-0.393-0.729-0.461-1.844-1.435-2.526 c-0.289-0.227-0.069-0.486,0.264-0.451c0.615,0.174,1.125,0.596,1.605,1.222c0.478,0.627,0.703,0.769,1.596,0.769 c0.433,0,1.081-0.025,1.691-0.121c0.328-0.833,0.895-1.6,1.588-1.962c-3.996-0.411-5.903-2.399-5.903-5.098 c0-1.162,0.495-2.286,1.336-3.233C9.053,10.647,8.706,8.73,9.435,8c1.798,0,2.885,1.166,3.146,1.481C13.477,9.174,14.461,9,15.495,9 c1.036,0,2.024,0.174,2.922,0.483C18.675,9.17,19.763,8,21.565,8c0.732,0.731,0.381,2.656,0.102,3.594 c0.836,0.945,1.328,2.066,1.328,3.226c0,2.697-1.904,4.684-5.894,5.097C18.199,20.49,19,22.1,19,23.313v2.734 c0,0.104-0.023,0.179-0.035,0.268C23.641,24.676,27,20.236,27,15C27,8.373,21.627,3,15,3z"/></svg></a>
           <a href="https://reddit.com/u/Arda-Efe" id="reddit"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
             <g><path d="M714.6,196.3c-8.7-3.1-103.3-35.9-144.3-6.8c-43,30.6-40.7,128.8-36.5,129c93.9,6.6,178.5,35.3,243.6,78.7c5.9,4,62.1-45.5,123.2-35.3c61.1,10.3,103.4,69.4,85,133.1c-18.5,63.8-79,83.1-77.6,101.8c0.4,5.1,0.6,10.3,0.6,15.5c0,163.1-186.4,295.4-416.2,295.4c-229.9,0-416.2-132.2-416.2-295.4c0-8.2,0.5-16.3,1.4-24.3c0.1-0.9-42-25.5-58.6-63.5c-15.9-36.3-8.5-81.3,7.8-107.2c26-41.3,58.2-55.4,101.5-55.4c43.3,0,91.6,27.2,93.6,26c70.5-42.8,161.4-69.2,260.9-70.8c3.2-0.1-7.7-119,60.1-163.7c67.8-44.7,181.1,0,182.4,0c0.3,0,0.2,1-0.1,2.7c17.8-38,56-64.2,100.3-64.2c61.3,0,111,50.4,111,112.5s-49.7,112.5-111,112.5c-61.3,0-111-50.4-111-112.5C714.3,201.8,714.4,199.1,714.6,196.3L714.6,196.3z M658.8,598.5c30.7,0,55.5-25.2,55.5-56.3s-24.8-56.3-55.5-56.3s-55.5,25.2-55.5,56.3S628.2,598.5,658.8,598.5z M325.8,598.5c30.7,0,55.5-25.2,55.5-56.3s-24.8-56.3-55.5-56.3c-30.6,0-55.5,25.2-55.5,56.3S295.2,598.5,325.8,598.5z M506.2,734c-100.1,0-157.3-42.3-157.3-42.3c-4.5-2.9-10.1-1.4-12.6,3.4l-9.8,19.2c-2.4,4.8-1.2,11.5,3,14.9c0,0,49.3,50.6,176.7,50.6c127.4,0,173.6-54.3,173.6-54.3c3.7-3.6,4.2-10,1-14.4l-12.2-16.8c-3.2-4.4-9.1-5.3-13.7-2C654.9,692.2,606.3,734,506.2,734z M825.3,260.9c30.6,0,55.5-25.2,55.5-56.3c0-31.1-24.8-56.3-55.5-56.3c-30.7,0-55.5,25.2-55.5,56.3C769.8,235.7,794.7,260.9,825.3,260.9z"/></g>
@@ -98,7 +113,7 @@ function showSnackBar() {
         <h2>Social Media</h2>
         <ul>                  
           <li><a href="https://instagram.com/ardaxefe">Instagram</a></li>
-          <li><a href="mailto:ardagkc@proton.me">E-Mail</a></li>
+          <li><a href="mailto:arda@duzelicem.com">E-Mail</a></li>
           <li><a href="https://github.com/duzelicem">GitHub</a></li>
           <li><a href="https://reddit.com/u/Arda-Efe">Reddit</a></li>
           <li><a onclick='copyText("@dcez") || showSnackBar()' id="discord">Discord</a></li>
@@ -111,7 +126,7 @@ function showSnackBar() {
   <li> </li>
   <li> </li>
   <li> </li>
-  <li>arda.is-a.dev</li>
+  <li>duzelicem.com</li>
   <li> </li>
   <li>It was coded and designed by <a href="https://github.com/duzelicem">arda efe</a>.</li>
   <li> </li>
@@ -133,5 +148,5 @@ function showSnackBar() {
   <script src="js/mv.es5.js"></script>
 </body>
 
-<!-- It was coded and designed by arda efe. | https://duzelicem.github.io/ | 2023 ©-->
+<!-- It was coded and designed by arda efe. | www.duzelicem.com | 2023 ©-->
 </html>
