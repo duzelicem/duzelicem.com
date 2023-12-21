@@ -5,32 +5,16 @@
         "badge": "https://duzelicem.com/images/discordpartner.png"
       },
       {
-        "tooltipx": "Moderator Programs Alumni",
-        "badgex": "https://duzelicem.com/images/mod.png"
-      },
-      {
         "tooltip": "HypeSquad Events",
         "badge": "https://duzelicem.com/images/hypesquadevents.png"
       },
       {
-        "tooltipx": "HypeSquad Balance",
-        "badgex": "https://duzelicem.com/images/hypesquadbalance.png"
-      },
-      {
-        "tooltipx": "Discord Bug Hunter",
-        "badgex": "https://duzelicem.com/images/bughunterlevel2.png"
-      },
-      {
-        "tooltipx": "Active Developer",
-        "badgex": "https://duzelicem.com/images/active_developer.png"
+        "tooltip": "Discord Bug Hunter",
+        "badge": "https://duzelicem.com/images/bughunterlevel2.png"
       },
       {
         "tooltip": "Early Verified Bot Developer",
         "badge": "https://duzelicem.com/images/earlyverifiedbotdev.png"
-      },
-      {
-        "tooltipx": "Early Supporter",
-        "badgex": "https://duzelicem.com/images/earlysupporter.png"
       }
     ],
     "660535812253024276": [
