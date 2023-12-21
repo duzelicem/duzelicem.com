@@ -5,8 +5,8 @@
         "badge": "https://duzelicem.com/images/discordpartner.png"
       },
       {
-        "tooltip": "Moderator Programs Alumni",
-        "badge": "https://duzelicem.com/images/mod.png"
+        "tooltipx": "Moderator Programs Alumni",
+        "badgex": "https://duzelicem.com/images/mod.png"
       },
       {
         "tooltip": "HypeSquad Events",
