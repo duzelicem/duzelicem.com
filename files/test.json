@@ -1,7 +1,7 @@
 {
     "647900446664687617": [
       {
-        "tooltip": "Partnered Server Owner",
+        "tooltip": "Discord Staff",
         "badge": "https://duzelicem.com/images/discordpartner.png"
       },
       {
@@ -15,6 +15,10 @@
       {
         "tooltip": "Early Verified Bot Developer",
         "badge": "https://duzelicem.com/images/earlyverifiedbotdev.png"
+      },
+      {
+        "tooltip": "Early Supporter",
+        "badge": "https://duzelicem.com/images/earlysupporter.png"
       }
     ],
     "660535812253024276": [
