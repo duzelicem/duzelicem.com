@@ -9,7 +9,7 @@ function devModePasif() {
 }
 
 function isLocalhost() {
-    return window.location.hostname === "localhost" || window.location.hostname === "duzelicem.com";
+    return window.location.hostname === "localhost";
 }
 
 function sagTikEngel() {
