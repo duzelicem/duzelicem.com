@@ -2,9 +2,12 @@ function devModePasif() {
     if (!isLocalhost()) {
         sagTikEngel();
         konsolkapat();
+        document.title = "arda";
     }
     else {
         alert("You are in development mode. You can't disable dev mode on localhost.");
+        console.log("Welcome, He Who Remains.");
+        document.title = "arda (Dev Mode)";
     }
 }
 
