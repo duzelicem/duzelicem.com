@@ -139,6 +139,10 @@ section ul a:hover {
   color: #adb0b6;
 }
 
+#discord:hover {
+  cursor: pointer;
+}
+
 a.more {
   font-size: 16px;
   text-decoration: none;
