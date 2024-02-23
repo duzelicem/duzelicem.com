@@ -1,7 +1,7 @@
-function devModePasif() {
-    if (!isLocalhost()) {
-        sagTikEngel();
-        konsolkapat();
+function devMode1() {
+    if (!isLocalhost1()) {
+        sagTikEngel1();
+        konsolkapat1();
         document.title = "arda";
     }
     else {
@@ -11,17 +11,17 @@ function devModePasif() {
     }
 }
 
-function isLocalhost() {
+function isLocalhost1() {
     return window.location.hostname === "localhost";
 }
 
-function sagTikEngel() {
+function sagTikEngel1() {
     document.addEventListener("contextmenu", function (dilosurucu) {
         dilosurucu.preventDefault();
     });
 }
 
-function konsolkapat() {
+function konsolkapat1() {
     DisableDevtool({
         ondevtoolopen(type, next) {
             next();
@@ -30,4 +30,4 @@ function konsolkapat() {
     });
 }
 
-devModePasif();
+devMode1();
