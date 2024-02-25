@@ -107,9 +107,9 @@
             "
           ></div>
         </div>
-        <div style="float: right; font-size: 0.9em">
+        <div id="onlinecheck" style="float: right; font-size: 0.9em">
 
-        @ardaxefe
+
 
         </div>
       </div>
@@ -118,6 +118,22 @@
 </table>
 
 <script>
+
+function onlinecheck() {
+    $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
+        const onlineData = data.discord_status;
+        var online = `<svg width="10" height="10" class="svg__7900e mask__5d7d8 icon__37f95" viewBox="0 0 10 10"><foreignObject x="0" y="0" width="10" height="10" overflow="visible" mask="url(#svg-mask-status-online)"><div class="status__1c26d" style="background-color: rgb(35, 165, 90);"></div></foreignObject></svg> @ardaxefe`;
+        var idle = `<svg width="10" height="10" class="svg__7900e mask__5d7d8 icon__37f95" viewBox="0 0 10 10"><foreignObject x="0" y="0" width="10" height="10" overflow="visible" mask="url(#svg-mask-status-idle)"><div class="status__1c26d" style="background-color: rgb(240, 178, 50);"></div></foreignObject></svg> @ardaxefe`;
+        var dnd = `<svg width="10" height="10" class="svg__7900e mask__5d7d8 icon__37f95" viewBox="0 0 10 10"><foreignObject x="0" y="0" width="10" height="10" overflow="visible" mask="url(#svg-mask-status-dnd)"><div class="status__1c26d" style="background-color: rgb(242, 63, 67);"></div></foreignObject></svg> @ardaxefe`;
+        var offline = `<svg width="10" height="10" class="svg__7900e mask__5d7d8 icon__37f95" viewBox="0 0 10 10"><foreignObject x="0" y="0" width="10" height="10" overflow="visible" mask="url(#svg-mask-status-offline)"><div class="status__1c26d" style="background-color: rgb(128, 132, 142);"></div></foreignObject></svg> @ardaxefe`;
+        
+            $("#onlinecheck").html(onlineData);
+    });
+}
+
+onlinecheck();
+setInterval(onlinecheck, 3000);
+
   var serviceHost = "https://spotifywidget.ardaxefe.workers.dev";
   var spotifyUser = "arda";
 
@@ -226,4 +242,5 @@
 
   // Oynatıcıyı Yükle
   updatePlayer();
+  setInterval(updatePlayer, 3000);
 </script>
