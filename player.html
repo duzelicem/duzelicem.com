@@ -27,66 +27,7 @@
           id="player-artist"
           style="font-size: 1.3em; margin-bottom: 1em"
         ></div>
-        <a
-          id="player-song-link"
-          href=""
-          target="_blank"
-          style="
-            color: #fff;
-            text-decoration: none;
-            border: 1px solid #fff;
-            border-radius: 10px;
-            padding: 0.2em;
-            margin-right: 0.2em;
-          "
-        >
-          🎵 Song
-        </a>
-        <a
-          id="player-artist-link"
-          href=""
-          target="_blank"
-          style="
-            color: #fff;
-            text-decoration: none;
-            border: 1px solid #fff;
-            border-radius: 10px;
-            padding: 0.2em;
-            margin-right: 0.2em;
-          "
-        >
-          🧑‍🎤 Artist</a
-        >
-        <a
-          id="player-album-link"
-          href=""
-          target="_blank"
-          style="
-            color: #fff;
-            text-decoration: none;
-            border: 1px solid #fff;
-            border-radius: 10px;
-            padding: 0.2em;
-            margin-right: 0.2em;
-          "
-        >
-          💽 Album</a
-        >
-        <a
-          id="player-mp3-link"
-          href=""
-          target="_blank"
-          style="
-            color: #fff;
-            text-decoration: none;
-            border: 1px solid #fff;
-            border-radius: 10px;
-            padding: 0.2em;
-            margin-right: 0.2em;
-          "
-        >
-          📻 MP3</a
-        >
+       
         <div id="player-status" style="margin: 2em 0 1em 0"></div>
         <div
           id="player-time"
@@ -117,78 +58,61 @@
   </tr>
 </table>
 
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 <script>
 
-  var serviceHost = "https://spotifywidget.ardaxefe.workers.dev";
-  var spotifyUser = "arda";
+function formatTime(milliseconds) {
+    // Toplam süreyi saniye cinsine çevir
+    const totalSeconds = milliseconds / 1000;
 
-  var songData, progressSeconds, totalSeconds, progressInterval;
+    // Dakikaları ve saniyeleri hesapla
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+
+    // Dakika ve saniye değerlerini stringe dönüştür
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    // Biçimlendirilmiş zamanı döndür
+    return `${formattedMinutes}:${formattedSeconds}`;
+}
 
   function updatePlayer() {
-  fetch(`${serviceHost}/get-now-playing`)
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.hasOwnProperty("ERROR")) {
-        document.getElementById(
-          "player-song"
-        ).innerHTML = `${spotifyUser} is not listening to music right now.`;
-        document.getElementById("player-artist").innerHTML = "  ";
-        document.getElementById("player-song-link").style.display = "none";
-        document.getElementById("player-artist-link").style.display = "none";
-        document.getElementById("player-album-link").style.display = "none";
-        document.getElementById("player-mp3-link").style.display = "none";
-        return;
-      }
-      songData = data;
-      document.getElementById("player-song").innerHTML = data.item.name;
-      document.getElementById("player-artist").innerHTML =
-        data.item.artists[0].name;
-      document.getElementById("player-status").innerHTML = data.is_playing
-        ? `▶️ ${spotifyUser} listening...`
-        : `⏸ ${spotifyUser} stopped.`;
-      document
-        .getElementById("player-album-art")
-        .setAttribute("src", data.item.album.images[1].url);
-      // Timer to show updates on progress bar and time
-      // https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
-      progressSeconds = Math.ceil(songData.progress_ms / 1000);
-      totalSeconds = Math.ceil(songData.item.duration_ms / 1000);
-      // Process progress only if a song is in 'playing' state
-      if (songData.is_playing) {
-        progressInterval = setInterval(setProgress, 1000);
-      } else {
-        setProgress();
-      }
-    });
-}
-
-function setProgress() {
-  if (progressSeconds > totalSeconds) {
-    clearInterval(progressInterval);
-    updatePlayer();
-    return;
+      $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
+          const spotifyData = data.data.spotify;
+  
+          if (!spotifyData) {
+              document.getElementById("player-song").innerHTML = `arda is not listening to music right now.`;
+              document.getElementById("player-artist").innerHTML = "  ";
+              document.getElementById("player-status").innerHTML = null;
+              document.getElementById("player-album-art").setAttribute("src", " ");
+              document.getElementById("player-progress").style.width = `100%`;
+              document.getElementById("player-time").innerHTML = null;
+              return;
+          }
+  
+          document.getElementById("player-song").innerHTML = spotifyData.song;
+          document.getElementById("player-artist").innerHTML = spotifyData.artist;
+          document.getElementById("player-status").innerHTML = `▶️ arda listening...`;
+          document.getElementById("player-album-art").setAttribute("src", spotifyData.album_art_url);
+  
+          const currentTime = Date.now();
+          const startTime = spotifyData.timestamps.start;
+          const endTime = spotifyData.timestamps.end;
+          const duration = endTime - startTime;
+          const elapsedTime = currentTime - startTime;
+          const progress100 = (elapsedTime / duration) * 100;
+  
+          document.getElementById("player-progress").style.width = `${progress100}%`;
+          const currentSong = formatTime(elapsedTime);
+          const endOkunabilir = formatTime(duration);
+          document.getElementById("player-time").innerHTML = `${currentSong} - ${endOkunabilir} `;
+      });
   }
-  ++progressSeconds;
-  var totalLabel =
-    pad(parseInt(totalSeconds / 60)) + ":" + pad(totalSeconds % 60);
-  var progressLabel =
-    pad(parseInt(progressSeconds / 60)) + ":" + pad(progressSeconds % 60);
-  document.getElementById("player-time").innerHTML =
-    progressLabel + " / " + totalLabel;
-  document.getElementById("player-progress").style.width = `${
-    (progressSeconds * 100) / totalSeconds
-  }%`;
-}
-
-function pad(val) {
-  var valString = val + "";
-  if (valString.length < 2) {
-    return "0" + valString;
-  } else {
-    return valString;
-  }
-}
-
-  // Oynatıcıyı Yükle
+  
+  // Oynatıcıyı Yükle ve Güncelle
   updatePlayer();
-</script>
+  setInterval(updatePlayer, 1000);
+  
+  </script>
