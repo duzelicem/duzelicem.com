@@ -87,7 +87,8 @@ function formatTime(milliseconds) {
               document.getElementById("player-artist").innerHTML = "  ";
               document.getElementById("player-status").innerHTML = null;
               document.getElementById("player-album-art").setAttribute("src", " ");
-              document.getElementById("player-progress").style.width = `100%`;
+              document.getElementById("player-progress").style.display = "none";
+              document.getElementById("player-progress-back").style.display = "none";
               document.getElementById("player-time").innerHTML = null;
               return;
           }
@@ -103,6 +104,9 @@ function formatTime(milliseconds) {
           const duration = endTime - startTime;
           const elapsedTime = currentTime - startTime;
           const progress100 = (elapsedTime / duration) * 100;
+
+          document.getElementById("player-progress").style.display = "block";
+          document.getElementById("player-progress-back").style.display = "block";
   
           document.getElementById("player-progress").style.width = `${progress100}%`;
           const currentSong = formatTime(elapsedTime);
