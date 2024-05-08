@@ -1,7 +1,9 @@
 <script src="js/devmodeforplayer.js"></script>
-
 <script src='js/DisableDevTool.js'></script>
+<link rel="stylesheet" href="css/player.css">
 
+<div id="page">
+  <section id="social">
 <table
   id="player"
   style="
@@ -57,6 +59,8 @@
     </td>
   </tr>
 </table>
+</section>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
@@ -78,42 +82,58 @@ function formatTime(milliseconds) {
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-  function updatePlayer() {
-      $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
-          const spotifyData = data.data.spotify;
-  
-          if (!spotifyData) {
-              document.getElementById("player-song").innerHTML = `arda is not listening to music right now.`;
-              document.getElementById("player-artist").innerHTML = "  ";
-              document.getElementById("player-status").innerHTML = null;
-              document.getElementById("player-album-art").setAttribute("src", " ");
-              document.getElementById("player-progress").style.display = "none";
-              document.getElementById("player-progress-back").style.display = "none";
-              document.getElementById("player-time").innerHTML = null;
-              return;
-          }
-  
-          document.getElementById("player-song").innerHTML = spotifyData.song;
-          document.getElementById("player-artist").innerHTML = spotifyData.artist;
-          document.getElementById("player-status").innerHTML = `▶️ arda listening...`;
-          document.getElementById("player-album-art").setAttribute("src", spotifyData.album_art_url);
-  
-          const currentTime = Date.now();
-          const startTime = spotifyData.timestamps.start;
-          const endTime = spotifyData.timestamps.end;
-          const duration = endTime - startTime;
-          const elapsedTime = currentTime - startTime;
-          const progress100 = (elapsedTime / duration) * 100;
+function test123(artistList, maxChars) {
+    if (!artistList) return artistList;
 
-          document.getElementById("player-progress").style.display = "block";
-          document.getElementById("player-progress-back").style.display = "block";
-  
-          document.getElementById("player-progress").style.width = `${progress100}%`;
-          const currentSong = formatTime(elapsedTime);
-          const endOkunabilir = formatTime(duration);
-          document.getElementById("player-time").innerHTML = `${currentSong} - ${endOkunabilir} `;
-      });
-  }
+    const artists = artistList.split(';').map(artist => artist.trim());
+    const totalLength = artists.reduce((acc, curr) => acc + curr.length, 0);
+
+    if (artists.length === 1) {
+        return artists.map(artist => `<a href="https://open.spotify.com/intl-tr/search/${encodeURIComponent(artist)}" target="_blank">${artist}</a>`).join(', ');
+    } else if (totalLength > maxChars) {
+        return "Various Artists";
+    } else {
+        return artists.map(artist => `<a href="https://open.spotify.com/intl-tr/search/${encodeURIComponent(artist)}" target="_blank">${artist}</a>`).join(', ');
+    }
+}
+
+function updatePlayer() {
+    $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
+        const spotifyData = data.data.spotify;
+
+        if (!spotifyData) {
+            document.getElementById("player-song").innerHTML = `arda is not listening to music right now.`;
+            document.getElementById("player-artist").innerHTML = "  ";
+            document.getElementById("player-status").innerHTML = null;
+            document.getElementById("player-album-art").setAttribute("src", " ");
+            document.getElementById("player-progress").style.display = "none";
+            document.getElementById("player-progress-back").style.display = "none";
+            document.getElementById("player-time").innerHTML = null;
+            return;
+        }
+
+        document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${spotifyData.track_id}" target="_blank">${spotifyData.song}</a>`;
+        document.getElementById("player-artist").innerHTML = test123(spotifyData.artist, 30);
+        document.getElementById("player-status").innerHTML = `▶️ arda listening...`;
+        document.getElementById("player-album-art").setAttribute("src", spotifyData.album_art_url);
+
+        const currentTime = Date.now();
+        const startTime = spotifyData.timestamps.start;
+        const endTime = spotifyData.timestamps.end;
+        const duration = endTime - startTime;
+        const elapsedTime = currentTime - startTime;
+        const progress100 = (elapsedTime / duration) * 100;
+
+        document.getElementById("player-progress").style.display = "block";
+        document.getElementById("player-progress-back").style.display = "block";
+
+        document.getElementById("player-progress").style.width = `${progress100}%`;
+        const currentSong = formatTime(elapsedTime);
+        const endOkunabilir = formatTime(duration);
+        document.getElementById("player-time").innerHTML = `${currentSong} - ${endOkunabilir}`;
+    });
+}
+
   
   // Oynatıcıyı Yükle ve Güncelle
   updatePlayer();
