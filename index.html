@@ -82,6 +82,19 @@ function showSnackBar() {
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
+<style>
+
+#status-icon {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  margin-left: 5px;
+  margin-bottom: -1px;
+  display: inline-block;
+}
+
+</style>
+
 </head>
 <body>
 
@@ -116,7 +129,7 @@ function showSnackBar() {
 		</div>
       </div>
     </header>
-	
+
 
 	
 <body onkeydown="return false">
@@ -150,11 +163,60 @@ function showSnackBar() {
           <br>
   <li>duzelicem.com</li>
   <br> 
-  <li>It was coded and designed by <b><a href="https://github.com/duzelicem">arda</a></b>.</li>
+  <li>It was coded and designed by <b><a href="https://github.com/duzelicem">arda</a></b><img id="status-icon" src="" alt="Discord Durumu" draggable="false"></li>
   <br>
   <li>2018 - 2024 ©</li>
   </ul>
-</section>
+</section>  
+  <script>
+
+function updateStatus() {
+  $.ajax({
+    url: 'https://api.lanyard.rest/v1/users/647900446664687617',
+    type: 'GET',
+    dataType: 'json',
+    timeout: 5000, // 5 saniye timeout
+    success: function(data) {
+      if (data && data.data) { // data değişkeninin null olmadığından ve data.data'nın tanımlı olduğundan emin olun
+        var status = data.data.discord_status;
+        var statusImage;
+        if (status === 'offline') {
+          statusImage = 'https://duzelicem.com/discord/Invisible.webp';
+        } else if (status === 'dnd') {
+          statusImage = 'https://duzelicem.com/discord/Do_Not_Disturb.webp';
+        } else if (status === 'idle') {
+          statusImage = 'https://duzelicem.com/discord/Idle.webp';
+        } else if (status === 'online') {
+          statusImage = 'https://duzelicem.com/discord/Online.webp';
+        } else {
+          statusImage = '';
+        }
+        $('#status-icon').attr('src', statusImage);
+      } else {
+        console.error('API response formatı beklenenden farklı.'); // Hata işleme mekanizması
+      }
+    },
+    error: function(xhr, status, error) {
+      console.error('API çağrısı başarısız: ' + status + ', ' + error); // Hata işleme mekanizması
+    }
+  });
+}
+
+$('#status-icon').on('click', function(e) {
+  e.preventDefault();
+});
+
+// Sağ tıklama olayını engelleme
+$('#status-icon').on('contextmenu', function(e) {
+  e.preventDefault();
+});
+
+$(document).ready(function(){
+  updateStatus(); // İlk çalıştırma
+  setInterval(updateStatus, 1000); // Her saniye tekrar çalıştırma
+});
+
+    </script>
     </div>
   </div>
   <svg id="page-stripes" class="full-size" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
@@ -164,10 +226,12 @@ function showSnackBar() {
       <svg width="211" height="186" buffered-rendering="static" style="background:transparent" viewBox="31.5 3.98 147 149.81" xmlns="http://www.w3.org/2000/svg"><path d="m105.13 5.2391-0.6328-1.2609-1.2667 1.2609c-0.69667 0.6935-1.2592 1.5984-1.25 2.0109s-3.9785 9.6375-8.8615 20.5c-4.883 10.862-12.007 26.95-15.831 35.75-3.8242 8.8-7.4791 17.462-8.1219 19.25l-1.1687 3.25-36.5 0.5 13.5 8.8681c7.425 4.8774 13.725 9.034 14 9.2367 0.275 0.20275-2.0517 5.8871-5.1706 12.632-3.1188 6.7448-7.9483 17.438-10.732 23.763-2.784 6.325-5.0697 11.838-5.0794 12.25-0.0097331 0.4125 1.4029 0.6375 3.1392 0.5l3.1569-0.25 5.8596-13.5c3.2228-7.425 6.5306-15.075 7.3508-17s2.7252-6.098 4.2335-9.2733l2.7422-5.7733 20 13.037c11 7.1704 20.338 13.031 20.75 13.023 0.4125-0.0075959 8.9625-5.3973 19-11.977 10.038-6.5798 18.7-11.992 19.25-12.026 0.55-0.034746 5.3698 9.7362 10.711 21.713l9.7108 21.776 3.0392 0.25c1.6716 0.1375 3.05-0.0875 3.0631-0.5s-2.1843-5.7-4.8832-11.75c-2.6989-6.05-7.2502-16.175-10.114-22.5-2.8638-6.325-5.0539-12.017-4.8668-12.649 0.1871-0.63211 6.6402-5.3571 14.34-10.5l14-9.3507-37.5-0.5-2.4008-5.25c-1.3205-2.8875-6.2212-13.8-10.891-24.25s-11.517-25.975-15.216-34.5c-3.6996-8.525-7.0114-16.067-7.3594-16.761zm-1.1328 13.72c0.275-0.0074866 4.9551 10.011 10.4 22.264 5.4451 12.252 11.805 26.552 14.133 31.777 2.3278 5.225 5.4103 11.638 6.8498 14.25s2.6174 5.425 2.6174 6.25 0.88632 3.1875 1.9696 5.25l1.9696 3.75-1.7196 1.585c-0.94578 0.87173-9.2571 6.3842-18.47 12.25l-16.75 10.665-18.75-12.103c-10.312-6.6567-18.858-12.169-18.989-12.25-0.13159-0.080836 0.88091-2.9595 2.25-6.397s2.9006-7.0375 3.4034-8c0.50281-0.9625 3.155-6.925 5.8936-13.25 2.7387-6.325 7.7491-17.8 11.134-25.5 3.3851-7.7 7.8205-17.719 9.8564-22.264s3.9266-8.2697 4.2016-8.2772zm-45.75 74.072c3.1625-0.017165 5.75 0.19379 5.75 0.46879s-0.45 1.4-1 2.5-1.3375 1.9977-1.75 1.9949c-0.4125-0.0028179-2.55-1.1138-4.75-2.4688l-4-2.4637 5.75-0.03121zm92.5-0.026928 6.75 0.0042812-4.5 2.9914c-2.475 1.6453-4.95 3.0063-5.5 3.0245-0.55 0.0182-1.5625-1.1049-2.25-2.4957s-1.25-2.7538-1.25-3.0288 3.0375-0.49807 6.75-0.49572z" fill="#fff"/></svg>
     </div>
     <svg id="stripes" class="full-size" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
-  </div>
+  </div>  
+
   <script src="js/dynamics.js"></script>
   <script src="js/tinycolor.js"></script>
   <script src="js/mv.es5.js"></script>
+
 </body>
 
 <!-- It was coded and designed by arda efe
