@@ -66,6 +66,23 @@
 
 <script>
 
+document.getElementById("player-song").setAttribute("draggable", "false");
+document.getElementById("player-song").style.userSelect = "none";
+document.getElementById("player-artist").setAttribute("draggable", "false");
+document.getElementById("player-artist").style.userSelect = "none";
+document.getElementById("player-status").setAttribute("draggable", "false");
+document.getElementById("player-status").style.userSelect = "none";
+document.getElementById("player-album-art").setAttribute("draggable", "false");
+document.getElementById("player-album-art").style.userSelect = "none";
+document.getElementById("player-progress").setAttribute("draggable", "false");
+document.getElementById("player-progress").style.userSelect = "none";
+document.getElementById("player-progress-back").setAttribute("draggable", "false");
+document.getElementById("player-progress-back").style.userSelect = "none";
+document.getElementById("player-time").setAttribute("draggable", "false");
+document.getElementById("player-time").style.userSelect = "none";
+document.getElementById("nick").setAttribute("draggable", "false");
+document.getElementById("nick").style.userSelect = "none";
+
 function formatTime(milliseconds) {
     // Toplam süreyi saniye cinsine çevir
     const totalSeconds = milliseconds / 1000;
