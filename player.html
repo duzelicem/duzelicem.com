@@ -137,38 +137,51 @@ function updatePlayerFromLanyard() {
 }
 
 function updatePlayerFromStatusJSON() {
-    $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
-        $.getJSON("https://duzelicem.com/discord/status.json", (statusData) => {
-            const status = statusData.data.status;
-            const activities = data.data.activities;
+  $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
+    $.getJSON("https://duzelicem.com/discord/status.json", (statusData) => {
+        const status = statusData.data.status;
+        const activities = data.data.activities;
+        const onlinedata = data.data.discord_status
 
-            if (status === "0") {
-                updatePlayerFromLanyard();
-            } else if (status === "1") {
-                const typeZeroActivity = activities.find(activity => activity.type === 0);
+        if (onlinedata === "offline") {
+            updatePlayerFromLanyard();
+            return false;
+        }
+        if (status === "0") {
+            updatePlayerFromLanyard();
+        } else if (status === "1") {
 
-                if (typeZeroActivity) {
-                    if (typeZeroActivity.assets && typeZeroActivity.assets.large_image) {
-                        const applicationId = typeZeroActivity.application_id;
-                        const largeImage = typeZeroActivity.assets.large_image;
-                        const albumArtUrl = `https://cdn.discordapp.com/app-assets/${applicationId}/${largeImage}.png`;
-                        document.getElementById("player-album-art").setAttribute("src", albumArtUrl);
-                        document.getElementById("player-progress").style.display = "none";
-                        document.getElementById("player-progress-back").style.display = "none";
-                        document.getElementById("nick").style.display = "none";
-                        document.getElementById("player-time").innerHTML = null;
-                    }
-                    document.getElementById("player-song").innerHTML = typeZeroActivity.name;
-                    document.getElementById("player-artist").innerHTML = typeZeroActivity.details;
-                    document.getElementById("player-status").innerHTML = typeZeroActivity.state;
+            const typeZeroActivity = activities.find(activity => activity.type === 0);
+
+            if (!typeZeroActivity) {
+          updatePlayerFromLanyard();
+          return;
+        }
+
+            if (typeZeroActivity.assets && typeZeroActivity.assets.large_image) {
+                    const applicationId = typeZeroActivity.application_id;
+                    const largeImage = typeZeroActivity.assets.large_image;
+                    const albumArtUrl = `https://cdn.discordapp.com/app-assets/${applicationId}/${largeImage}.png`;
+                    document.getElementById("player-album-art").setAttribute("src", albumArtUrl);
+                    document.getElementById("player-progress").style.display = "none";
+                    document.getElementById("player-progress-back").style.display = "none";
+                    document.getElementById("nick").style.display = "none";
+                    document.getElementById("player-time").innerHTML = null;
+
+            if (typeZeroActivity) {
+                document.getElementById("player-song").innerHTML = typeZeroActivity.name;
+                document.getElementById("player-artist").innerHTML = typeZeroActivity.details;
+                document.getElementById("player-status").innerHTML = typeZeroActivity.state;
                 } else {
                     updatePlayerFromLanyard();
                 }
+            } else {
+                updatePlayerFromLanyard();
             }
-        });
+        }
     });
+  });
 };
-
 
 updatePlayerFromStatusJSON();
 
