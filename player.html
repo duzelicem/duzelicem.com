@@ -128,6 +128,8 @@ function updatePlayerFromLanyard() {
         document.getElementById("player-progress").style.display = "block";
         document.getElementById("player-progress-back").style.display = "block";
         document.getElementById("nick").style.display = "block";
+        document.getElementById("player-status").style.display = "block";
+        document.getElementById("player-artist").style.display = "block";
 
         document.getElementById("player-progress").style.width = `${progress100}%`;
         const currentSong = formatTime(elapsedTime);
@@ -152,7 +154,6 @@ function updatePlayerFromStatusJSON() {
         } else if (status === "1") {
 
             const typeZeroActivity = activities.find(activity => activity.type === 0);
-
             if (!typeZeroActivity) {
           updatePlayerFromLanyard();
           return;
@@ -170,14 +171,29 @@ function updatePlayerFromStatusJSON() {
 
             if (typeZeroActivity) {
                 document.getElementById("player-song").innerHTML = typeZeroActivity.name;
-                document.getElementById("player-artist").innerHTML = typeZeroActivity.details;
-                document.getElementById("player-status").innerHTML = typeZeroActivity.state;
+                if (typeZeroActivity.details) {document.getElementById("player-artist").innerHTML = typeZeroActivity.details; document.getElementById("player-artist").style.display = "block";} else {document.getElementById("player-artist").style.display = "none";}
+                if (typeZeroActivity.state) {document.getElementById("player-status").innerHTML = typeZeroActivity.state; document.getElementById("player-status").style.display = "block";} else {document.getElementById("player-status").style.display = "none";}
                 } else {
                     updatePlayerFromLanyard();
                 }
+            } else if (typeZeroActivity.application_id) {
+                    const applicationId = typeZeroActivity.application_id;
+                    const dcdn = `https://dcdn.dstn.to/app-icons/${applicationId}`
+                    document.getElementById("player-album-art").setAttribute("src", dcdn);
+                    document.getElementById("player-progress").style.display = "none";
+                    document.getElementById("player-progress-back").style.display = "none";
+                    document.getElementById("nick").style.display = "none";
+                    document.getElementById("player-time").innerHTML = null;
+                  if (typeZeroActivity) {
+                document.getElementById("player-song").innerHTML = `Playing ${typeZeroActivity.name}`
+                if (typeZeroActivity.details) {document.getElementById("player-artist").innerHTML = typeZeroActivity.details;} else {document.getElementById("player-artist").style.display = "none";}
+                if (typeZeroActivity.state) {document.getElementById("player-status").innerHTML = typeZeroActivity.state;} else {document.getElementById("player-status").style.display = "none";}
+                } else {
+                    updatePlayerFromLanyard();
+                }  
             } else {
-                updatePlayerFromLanyard();
-            }
+                    updatePlayerFromLanyard();
+                }
         }
     });
   });
