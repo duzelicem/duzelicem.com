@@ -50,7 +50,7 @@
             "
           ></div>
         </div>
-        <div style="float: right; font-size: 0.9em">
+        <div id="nick" style="float: right; font-size: 0.9em">
 
 @ardaxefe
 
@@ -97,12 +97,13 @@ function test123(artistList, maxChars) {
     }
 }
 
-function updatePlayer() {
+function updatePlayerFromLanyard() {
     $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
         const spotifyData = data.data.spotify;
+        const activities = data.data.activities;
 
         if (!spotifyData) {
-            document.getElementById("player-song").innerHTML = `arda is not listening to music right now.`;
+            document.getElementById("player-song").innerHTML = `arda is not doing anything interesting right now.`;
             document.getElementById("player-artist").innerHTML = "  ";
             document.getElementById("player-status").innerHTML = null;
             document.getElementById("player-album-art").setAttribute("src", " ");
@@ -126,6 +127,7 @@ function updatePlayer() {
 
         document.getElementById("player-progress").style.display = "block";
         document.getElementById("player-progress-back").style.display = "block";
+        document.getElementById("nick").style.display = "block";
 
         document.getElementById("player-progress").style.width = `${progress100}%`;
         const currentSong = formatTime(elapsedTime);
@@ -134,9 +136,44 @@ function updatePlayer() {
     });
 }
 
-  
-  // Oynatıcıyı Yükle ve Güncelle
-  updatePlayer();
-  setInterval(updatePlayer, 1000);
+function updatePlayerFromStatusJSON() {
+  $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
+    $.getJSON("https://duzelicem.com/discord/status.json", (statusData) => {
+        const status = statusData.data.status;
+        const activities = data.data.activities;
+
+        if (status === "0") {
+            updatePlayerFromLanyard();
+        } else if (status === "1") {
+            const typeZeroActivity = activities.find(activity => activity.type === 0);
+
+            if (typeZeroActivity.assets && typeZeroActivity.assets.large_image) {
+                    const applicationId = typeZeroActivity.application_id;
+                    const largeImage = typeZeroActivity.assets.large_image;
+                    const albumArtUrl = `https://cdn.discordapp.com/app-assets/${applicationId}/${largeImage}.png`;
+                    document.getElementById("player-album-art").setAttribute("src", albumArtUrl);
+                    document.getElementById("player-progress").style.display = "none";
+                    document.getElementById("player-progress-back").style.display = "none";
+                    document.getElementById("nick").style.display = "none";
+                    document.getElementById("player-time").innerHTML = null;
+
+            if (typeZeroActivity) {
+                document.getElementById("player-song").innerHTML = typeZeroActivity.name;
+                document.getElementById("player-artist").innerHTML = typeZeroActivity.details;
+                document.getElementById("player-status").innerHTML = typeZeroActivity.state;
+                } else {
+                    updatePlayerFromLanyard();
+                }
+            } else {
+                updatePlayerFromLanyard();
+            }
+        }
+    });
+  });
+};
+
+updatePlayerFromStatusJSON();
+
+  setInterval(updatePlayerFromStatusJSON, 1000);
   
   </script>
