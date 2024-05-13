@@ -118,6 +118,8 @@ function updatePlayerFromLanyard() {
     $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
         const spotifyData = data.data.spotify;
         const activities = data.data.activities;
+        const spotifyLogo = '<img src="https://duzelicem.com/images/spo.png" alt="Spotify Logo" style="width: 1.4em; vertical-align: middle;">';
+        const playerStatusContent = spotifyLogo + ' arda listening...';
 
         if (!spotifyData) {
             document.getElementById("player-song").innerHTML = `arda is not doing anything interesting right now.`;
@@ -132,7 +134,7 @@ function updatePlayerFromLanyard() {
 
         document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${spotifyData.track_id}" target="_blank">${spotifyData.song}</a>`;
         document.getElementById("player-artist").innerHTML = test123(spotifyData.artist, 30);
-        document.getElementById("player-status").innerHTML = `▶️ arda listening...`;
+        document.getElementById("player-status").innerHTML = playerStatusContent;
         document.getElementById("player-album-art").setAttribute("src", spotifyData.album_art_url);
 
         const currentTime = Date.now();
