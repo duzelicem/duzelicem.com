@@ -118,7 +118,7 @@ function updatePlayerFromLanyard() {
     $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
         const spotifyData = data.data.spotify;
         const activities = data.data.activities;
-        const spotifyLogo = '<img src="https://duzelicem.com/images/spo.png" alt="Spotify Logo" style="width: 1.4em; vertical-align: middle;">';
+        const spotifyLogo = '<img src="https://duzelicem.com/images/spo.png" alt="Spotify Logo" draggable="false" style="width: 1.4em; vertical-align: middle;">';
         const playerStatusContent = spotifyLogo + ' arda listening...';
 
         if (!spotifyData) {
