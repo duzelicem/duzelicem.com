@@ -122,15 +122,35 @@ function updatePlayerFromLanyard() {
         const playerStatusContent = spotifyLogo + ' arda listening...';
 
         if (!spotifyData) {
-            document.getElementById("player-song").innerHTML = `arda is not doing anything interesting right now.`;
-            document.getElementById("player-artist").innerHTML = "  ";
-            document.getElementById("player-status").innerHTML = null;
-            document.getElementById("player-album-art").setAttribute("src", " ");
-            document.getElementById("player-progress").style.display = "none";
-            document.getElementById("player-progress-back").style.display = "none";
-            document.getElementById("player-time").innerHTML = null;
-            return;
-        }
+          
+          fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer BQAHebAmv7En24YZXG-QE5oDYEj3m-YuSwqngeTbAFcy5uq2E3riPfQCru8J7-rzMT04NPtMZzItMlIvcpDAk2RwkhWsGR7VxQons_m7Ibbop2s57a325A4hu9MKxk7Lu2_QAud2yzdA6pXoI-Ye5TSUJEENE1BSjLclh9dnZ7LdnoF38SDY-uGY-n62sqesZpKJo6EFbk0n2ePegA'
+  }
+})
+.then(response => response.json())
+.then(data => {
+  const lastPlayedTrack = data.items[0].track;
+  const artistNames = lastPlayedTrack.artists.map(artist => artist.name).join(', ');
+  const trackName = lastPlayedTrack.name;
+  const trackID = lastPlayedTrack.id;
+  const albumCoverUrl = lastPlayedTrack.album.images[0].url;        
+  document.getElementById("player-progress").style.display = "block";
+  document.getElementById("player-progress-back").style.display = "block";
+  document.getElementById("nick").style.display = "block";
+  document.getElementById("player-status").style.display = "block";
+  document.getElementById("player-artist").style.display = "block";
+  document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${trackID}" target="_blank">${trackName}</a>`;
+  document.getElementById("player-artist").innerHTML = test123(artistNames, 30);
+  document.getElementById("player-album-art").setAttribute("src", albumCoverUrl);
+  document.getElementById("player-status").innerHTML = spotifyLogo + " Recently Played";
+  document.getElementById("nick").innerHTML = "arda is not doing anything interesting right now...";
+  document.getElementById("player-progress").style.display = "none";
+  document.getElementById("player-progress-back").style.display = "none";
+  document.getElementById("player-time").innerHTML = null;
+})
+}
 
         document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${spotifyData.track_id}" target="_blank">${spotifyData.song}</a>`;
         document.getElementById("player-artist").innerHTML = test123(spotifyData.artist, 30);
@@ -147,6 +167,7 @@ function updatePlayerFromLanyard() {
         document.getElementById("player-progress").style.display = "block";
         document.getElementById("player-progress-back").style.display = "block";
         document.getElementById("nick").style.display = "block";
+        document.getElementById("nick").innerHTML = "@ardaxefe"
         document.getElementById("player-status").style.display = "block";
         document.getElementById("player-artist").style.display = "block";
 
@@ -156,6 +177,8 @@ function updatePlayerFromLanyard() {
         document.getElementById("player-time").innerHTML = `${currentSong} - ${endOkunabilir}`;
     });
 }
+
+
 
 function updatePlayerFromStatusJSON() {
   $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
