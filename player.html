@@ -4,68 +4,62 @@
 
 <div id="page">
   <section id="social">
-<table
-  id="player"
-  style="
-    color: #fff;
-    font-family: Helvetica, Arial;
-    font-size: 5vmin;
-    border-radius: 10px;
-    width: 100%;
-    height: 100%;
-  "
->
-  <tr height="100%">
-    <td width="20%" align="center">
-      <img
-        id="player-album-art"
-        style="margin: 1em; max-height: 50vmin; border-radius: 10px"
-      />
-    </td>
-    <td width="80%">
-      <div style="margin: 1em 1em 1em 0">
-        <div id="player-song" style="font-size: 2em"></div>
-        <div
-          id="player-artist"
-          style="font-size: 1.3em; margin-bottom: 1em"
-        ></div>
-       
-        <div id="player-status" style="margin: 2em 0 1em 0"></div>
-        <div
-          id="player-time"
-          style="position: relative; float: right; top: -2em; font-weight: bold"
-        ></div>
-        <div
-          id="player-progress-back"
-          style="border: 0.15em solid #eee; height: 1em; border-radius: 10px"
-        >
-          <div
-            id="player-progress"
-            style="
-              background-color: #eee;
-              border: 0.1em solid transparent;
-              height: 0.75em;
-              border-radius: 10px;
-              transition: width 0.2s;
-            "
-          ></div>
-        </div>
-        <div id="nick" style="float: right; font-size: 0.9em">
-
-@ardaxefe
-
-        </div>
-      </div>
-    </td>
-  </tr>
-</table>
-</section>
+    <table
+      id="player"
+      style="
+        color: #fff;
+        font-family: Helvetica, Arial;
+        font-size: 5vmin;
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+      "
+    >
+      <tr height="100%">
+        <td width="20%" align="center">
+          <img
+            id="player-album-art"
+            style="margin: 1em; max-height: 50vmin; border-radius: 10px"
+          />
+        </td>
+        <td width="80%">
+          <div style="margin: 1em 1em 1em 0">
+            <div id="player-song" style="font-size: 2em"></div>
+            <div
+              id="player-artist"
+              style="font-size: 1.3em; margin-bottom: 1em"
+            ></div>
+            <div id="player-status" style="margin: 2em 0 1em 0"></div>
+            <div
+              id="player-time"
+              style="position: relative; float: right; top: -2em; font-weight: bold"
+            ></div>
+            <div
+              id="player-progress-back"
+              style="border: 0.15em solid #eee; height: 1em; border-radius: 10px"
+            >
+              <div
+                id="player-progress"
+                style="
+                  background-color: #eee;
+                  border: 0.1em solid transparent;
+                  height: 0.75em;
+                  border-radius: 10px;
+                  transition: width 0.2s;
+                "
+              ></div>
+            </div>
+            <div id="nick" style="float: right; font-size: 0.9em">@ardaxefe</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </section>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <script>
-
 document.getElementById("player-song").setAttribute("draggable", "false");
 document.getElementById("player-song").style.userSelect = "none";
 document.getElementById("player-artist").setAttribute("draggable", "false");
@@ -84,27 +78,18 @@ document.getElementById("nick").setAttribute("draggable", "false");
 document.getElementById("nick").style.userSelect = "none";
 
 function formatTime(milliseconds) {
-    // Toplam süreyi saniye cinsine çevir
     const totalSeconds = milliseconds / 1000;
-
-    // Dakikaları ve saniyeleri hesapla
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = Math.floor(totalSeconds % 60);
-
-    // Dakika ve saniye değerlerini stringe dönüştür
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-
-    // Biçimlendirilmiş zamanı döndür
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 
 function test123(artistList, maxChars) {
     if (!artistList) return artistList;
-
     const artists = artistList.split(';').map(artist => artist.trim());
     const totalLength = artists.reduce((acc, curr) => acc + curr.length, 0);
-
     if (artists.length === 1) {
         return artists.map(artist => `<a href="https://open.spotify.com/intl-tr/search/${encodeURIComponent(artist)}" target="_blank">${artist}</a>`).join(', ');
     } else if (totalLength > maxChars) {
@@ -114,135 +99,150 @@ function test123(artistList, maxChars) {
     }
 }
 
-function updatePlayerFromLanyard() {
-    $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
-        const spotifyData = data.data.spotify;
-        const activities = data.data.activities;
-        const spotifyLogo = '<img src="https://duzelicem.com/images/spo.png" alt="Spotify Logo" draggable="false" style="width: 1.4em; vertical-align: middle;">';
-        const playerStatusContent = spotifyLogo + ' arda listening...';
-
-        if (!spotifyData) {
-          
-          fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer BQAHebAmv7En24YZXG-QE5oDYEj3m-YuSwqngeTbAFcy5uq2E3riPfQCru8J7-rzMT04NPtMZzItMlIvcpDAk2RwkhWsGR7VxQons_m7Ibbop2s57a325A4hu9MKxk7Lu2_QAud2yzdA6pXoI-Ye5TSUJEENE1BSjLclh9dnZ7LdnoF38SDY-uGY-n62sqesZpKJo6EFbk0n2ePegA'
-  }
-})
-.then(response => response.json())
-.then(data => {
-  const lastPlayedTrack = data.items[0].track;
-  const artistNames = lastPlayedTrack.artists.map(artist => artist.name).join(', ');
-  const trackName = lastPlayedTrack.name;
-  const trackID = lastPlayedTrack.id;
-  const albumCoverUrl = lastPlayedTrack.album.images[0].url;        
-  document.getElementById("player-progress").style.display = "block";
-  document.getElementById("player-progress-back").style.display = "block";
-  document.getElementById("nick").style.display = "block";
-  document.getElementById("player-status").style.display = "block";
-  document.getElementById("player-artist").style.display = "block";
-  document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${trackID}" target="_blank">${trackName}</a>`;
-  document.getElementById("player-artist").innerHTML = test123(artistNames, 30);
-  document.getElementById("player-album-art").setAttribute("src", albumCoverUrl);
-  document.getElementById("player-status").innerHTML = "arda is not doing anything interesting right now...";
-  document.getElementById("nick").innerHTML = spotifyLogo + " Recently Played";
-  document.getElementById("player-progress").style.display = "none";
-  document.getElementById("player-progress-back").style.display = "none";
-  document.getElementById("player-time").innerHTML = null;
-})
+async function getAccessToken() {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: {
+            Authorization: "Basic " + btoa("8c2deb9ea7564c9388f09254a2b44085:1b60001a04484177b0d02aac872ad5dd"),
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "grant_type=refresh_token&refresh_token=AQD6_zYBP1fFTnnyyt3TEaqao2raRUlI4qVevoi0OyzrZOvKa_mOEFDwoK1AePL_p7Fg-ECTcl11iAqxHyC_0r7Ristk_IkA78JdRJ8CYGh6ipYeJm_3PLwN-zQn1x9YBkk",
+    });
+    const data = await response.json();
+    return data.access_token;
 }
 
-        document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${spotifyData.track_id}" target="_blank">${spotifyData.song}</a>`;
-        document.getElementById("player-artist").innerHTML = test123(spotifyData.artist, 30);
-        document.getElementById("player-status").innerHTML = playerStatusContent;
-        document.getElementById("player-album-art").setAttribute("src", spotifyData.album_art_url);
+async function updatePlayerFromLanyard() {
+    const data = await $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617");
+    const spotifyData = data.data.spotify;
+    const activities = data.data.activities;
+    const spotifyLogo = '<img src="https://duzelicem.com/images/spo.png" alt="Spotify Logo" draggable="false" style="width: 1.4em; vertical-align: middle;">';
+    const playerStatusContent = spotifyLogo + ' arda listening...';
 
-        const currentTime = Date.now();
-        const startTime = spotifyData.timestamps.start;
-        const endTime = spotifyData.timestamps.end;
-        const duration = endTime - startTime;
-        const elapsedTime = currentTime - startTime;
-        const progress100 = (elapsedTime / duration) * 100;
+    const access_token = await getAccessToken();
+
+    if (!spotifyData) {
+        const response = await fetch('https://api.spotify.com/v1/me/player/recently-played?limit=1', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + access_token,
+            },
+        });
+        const data = await response.json();
+        const lastPlayedTrack = data.items[0].track;
+        const artistNames = lastPlayedTrack.artists.map(artist => artist.name).join(', ');
+        const trackName = lastPlayedTrack.name;
+        const trackID = lastPlayedTrack.id;
+        const albumCoverUrl = lastPlayedTrack.album.images[0].url;
 
         document.getElementById("player-progress").style.display = "block";
         document.getElementById("player-progress-back").style.display = "block";
         document.getElementById("nick").style.display = "block";
-        document.getElementById("nick").innerHTML = "@ardaxefe"
         document.getElementById("player-status").style.display = "block";
         document.getElementById("player-artist").style.display = "block";
+        document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${trackID}" target="_blank">${trackName}</a>`;
+        document.getElementById("player-artist").innerHTML = test123(artistNames, 30);
+        document.getElementById("player-album-art").setAttribute("src", albumCoverUrl);
+        document.getElementById("player-status").innerHTML = "arda is not doing anything interesting right now...";
+        document.getElementById("nick").innerHTML = spotifyLogo + " Recently Played";
+        document.getElementById("player-progress").style.display = "none";
+        document.getElementById("player-progress-back").style.display = "none";
+        document.getElementById("player-time").innerHTML = null;
 
-        document.getElementById("player-progress").style.width = `${progress100}%`;
-        const currentSong = formatTime(elapsedTime);
-        const endOkunabilir = formatTime(duration);
-        document.getElementById("player-time").innerHTML = `${currentSong} - ${endOkunabilir}`;
-    });
+        return;
+    }
+
+    document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${spotifyData.track_id}" target="_blank">${spotifyData.song}</a>`;
+    document.getElementById("player-artist").innerHTML = test123(spotifyData.artist, 30);
+    document.getElementById("player-status").innerHTML = playerStatusContent;
+    document.getElementById("player-album-art").setAttribute("src", spotifyData.album_art_url);
+
+    const currentTime = Date.now();
+    const startTime = spotifyData.timestamps.start;
+    const endTime = spotifyData.timestamps.end;
+    const duration = endTime - startTime;
+    const elapsedTime = currentTime - startTime;
+    const progress100 = (elapsedTime / duration) * 100;
+
+    document.getElementById("player-progress").style.display = "block";
+    document.getElementById("player-progress-back").style.display = "block";
+    document.getElementById("nick").style.display = "block";
+    document.getElementById("nick").innerHTML = "@ardaxefe";
+    document.getElementById("player-status").style.display = "block";
+    document.getElementById("player-artist").style.display = "block";
+
+    document.getElementById("player-progress").style.width = `${progress100}%`;
+    const currentSong = formatTime(elapsedTime);
+    const endOkunabilir = formatTime(duration);
+    document.getElementById("player-time").innerHTML = `${currentSong} - ${endOkunabilir}`;
 }
 
+async function updatePlayerFromStatusJSON() {
+    const data = await $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617");
+    const statusData = await $.getJSON("https://duzelicem.com/discord/status.json");
+    const status = statusData.data.status;
+    const activities = data.data.activities;
+    const onlinedata = data.data.discord_status;
 
+    if (onlinedata === "offline" || status === "0") {
+        updatePlayerFromLanyard();
+        return;
+    }
 
-function updatePlayerFromStatusJSON() {
-  $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617", (data) => {
-    $.getJSON("https://duzelicem.com/discord/status.json", (statusData) => {
-        const status = statusData.data.status;
-        const activities = data.data.activities;
-        const onlinedata = data.data.discord_status
+    const typeZeroActivity = activities.find(activity => activity.type === 0);
+    if (!typeZeroActivity) {
+        updatePlayerFromLanyard();
+        return;
+    }
 
-        if (onlinedata === "offline") {
-            updatePlayerFromLanyard();
-            return false;
+    if (typeZeroActivity.assets && typeZeroActivity.assets.large_image) {
+        const applicationId = typeZeroActivity.application_id;
+        const largeImage = typeZeroActivity.assets.large_image;
+        const albumArtUrl = `https://cdn.discordapp.com/app-assets/${applicationId}/${largeImage}.png`;
+        document.getElementById("player-album-art").setAttribute("src", albumArtUrl);
+        document.getElementById("player-progress").style.display = "none";
+        document.getElementById("player-progress-back").style.display = "none";
+        document.getElementById("nick").style.display = "none";
+        document.getElementById("player-time").innerHTML = null;
+
+        document.getElementById("player-song").innerHTML = typeZeroActivity.name;
+        if (typeZeroActivity.details) {
+            document.getElementById("player-artist").innerHTML = typeZeroActivity.details;
+            document.getElementById("player-artist").style.display = "block";
+        } else {
+            document.getElementById("player-artist").style.display = "none";
         }
-        if (status === "0") {
-            updatePlayerFromLanyard();
-        } else if (status === "1") {
-
-            const typeZeroActivity = activities.find(activity => activity.type === 0);
-            if (!typeZeroActivity) {
-          updatePlayerFromLanyard();
-          return;
+        if (typeZeroActivity.state) {
+            document.getElementById("player-status").innerHTML = typeZeroActivity.state;
+            document.getElementById("player-status").style.display = "block";
+        } else {
+            document.getElementById("player-status").style.display = "none";
         }
+    } else if (typeZeroActivity.application_id) {
+        const applicationId = typeZeroActivity.application_id;
+        const dcdn = `https://dcdn.dstn.to/app-icons/${applicationId}`;
+        document.getElementById("player-album-art").setAttribute("src", dcdn);
+        document.getElementById("player-progress").style.display = "none";
+        document.getElementById("player-progress-back").style.display = "none";
+        document.getElementById("nick").style.display = "none";
+        document.getElementById("player-time").innerHTML = null;
 
-            if (typeZeroActivity.assets && typeZeroActivity.assets.large_image) {
-                    const applicationId = typeZeroActivity.application_id;
-                    const largeImage = typeZeroActivity.assets.large_image;
-                    const albumArtUrl = `https://cdn.discordapp.com/app-assets/${applicationId}/${largeImage}.png`;
-                    document.getElementById("player-album-art").setAttribute("src", albumArtUrl);
-                    document.getElementById("player-progress").style.display = "none";
-                    document.getElementById("player-progress-back").style.display = "none";
-                    document.getElementById("nick").style.display = "none";
-                    document.getElementById("player-time").innerHTML = null;
-
-            if (typeZeroActivity) {
-                document.getElementById("player-song").innerHTML = typeZeroActivity.name;
-                if (typeZeroActivity.details) {document.getElementById("player-artist").innerHTML = typeZeroActivity.details; document.getElementById("player-artist").style.display = "block";} else {document.getElementById("player-artist").style.display = "none";}
-                if (typeZeroActivity.state) {document.getElementById("player-status").innerHTML = typeZeroActivity.state; document.getElementById("player-status").style.display = "block";} else {document.getElementById("player-status").style.display = "none";}
-                } else {
-                    updatePlayerFromLanyard();
-                }
-            } else if (typeZeroActivity.application_id) {
-                    const applicationId = typeZeroActivity.application_id;
-                    const dcdn = `https://dcdn.dstn.to/app-icons/${applicationId}`
-                    document.getElementById("player-album-art").setAttribute("src", dcdn);
-                    document.getElementById("player-progress").style.display = "none";
-                    document.getElementById("player-progress-back").style.display = "none";
-                    document.getElementById("nick").style.display = "none";
-                    document.getElementById("player-time").innerHTML = null;
-                  if (typeZeroActivity) {
-                document.getElementById("player-song").innerHTML = `Playing ${typeZeroActivity.name}`
-                if (typeZeroActivity.details) {document.getElementById("player-artist").innerHTML = typeZeroActivity.details;} else {document.getElementById("player-artist").style.display = "none";}
-                if (typeZeroActivity.state) {document.getElementById("player-status").innerHTML = typeZeroActivity.state;} else {document.getElementById("player-status").style.display = "none";}
-                } else {
-                    updatePlayerFromLanyard();
-                }  
-            } else {
-                    updatePlayerFromLanyard();
-                }
+        document.getElementById("player-song").innerHTML = `Playing ${typeZeroActivity.name}`;
+        if (typeZeroActivity.details) {
+            document.getElementById("player-artist").innerHTML = typeZeroActivity.details;
+        } else {
+            document.getElementById("player-artist").style.display = "none";
         }
-    });
-  });
-};
+        if (typeZeroActivity.state) {
+            document.getElementById("player-status").innerHTML = typeZeroActivity.state;
+        } else {
+            document.getElementById("player-status").style.display = "none";
+        }
+    } else {
+        updatePlayerFromLanyard();
+    }
+}
 
 updatePlayerFromStatusJSON();
-
-  setInterval(updatePlayerFromStatusJSON, 1000);
-  
-  </script>
+setInterval(updatePlayerFromStatusJSON, 1000);
+</script>
