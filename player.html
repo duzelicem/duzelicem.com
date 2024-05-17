@@ -144,8 +144,8 @@ function updatePlayerFromLanyard() {
   document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${trackID}" target="_blank">${trackName}</a>`;
   document.getElementById("player-artist").innerHTML = test123(artistNames, 30);
   document.getElementById("player-album-art").setAttribute("src", albumCoverUrl);
-  document.getElementById("player-status").innerHTML = spotifyLogo + " Recently Played";
-  document.getElementById("nick").innerHTML = "arda is not doing anything interesting right now...";
+  document.getElementById("player-status").innerHTML = "arda is not doing anything interesting right now...";
+  document.getElementById("nick").innerHTML = spotifyLogo + " Recently Played";
   document.getElementById("player-progress").style.display = "none";
   document.getElementById("player-progress-back").style.display = "none";
   document.getElementById("player-time").innerHTML = null;
