@@ -99,6 +99,13 @@ function test123(artistList, maxChars) {
     }
 }
 
+function uzunYazi(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength - 3) + '...';
+    }
+    return text;
+}
+
 async function getAccessToken() {
     const response = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
@@ -152,7 +159,14 @@ async function updatePlayerFromLanyard() {
         return;
     }
 
-    document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${spotifyData.track_id}" target="_blank">${spotifyData.song}</a>`;
+    function uzunYazi(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength - 3) + '...';
+    }
+    return text;
+}
+
+    document.getElementById("player-song").innerHTML = `<a href="https://open.spotify.com/intl-tr/track/${spotifyData.track_id}" target="_blank">${uzunYazi(spotifyData.song, 75)}</a>`;
     document.getElementById("player-artist").innerHTML = test123(spotifyData.artist, 30);
     document.getElementById("player-status").innerHTML = playerStatusContent;
     document.getElementById("player-album-art").setAttribute("src", spotifyData.album_art_url);
