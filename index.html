@@ -80,6 +80,50 @@ function showSnackBar() {
   }
   </script>
 
+<script>
+async function getRepoLastModified(owner, repo, token) {
+  const url = `https://api.github.com/repos/${owner}/${repo}`;
+  const headers = {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json'
+  };
+
+  try {
+      const response = await fetch(url, { headers });
+      if (!response.ok) {
+          throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+      }
+      const repoData = await response.json();
+      return repoData.updated_at;
+  } catch (error) {
+      console.error('Error fetching repo data:', error);
+  }
+}
+
+function formatDateTime(dateTime) {
+  const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+  };
+  return new Date(dateTime).toLocaleString('en-US', options);
+}
+
+(async () => {
+  const owner = 'duzelicem';
+  const repo = 'duzelicem.com';
+  const token = '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';
+
+  const lastModified = await getRepoLastModified(owner, repo, token);
+  if (lastModified) {
+      document.getElementById('last-modified').textContent = `Last Modified at ${formatDateTime(lastModified)}`;
+  }
+})();
+</script>
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <style>
@@ -161,7 +205,7 @@ function showSnackBar() {
           <br>
           <br>
           <br>
-  <li>duzelicem.com</li>
+  <li><div id="last-modified"></div></li>
   <br> 
   <li>It was coded and designed by <b><a href="https://github.com/duzelicem">arda</a></b><img id="status-icon" src="" alt="Discord Durumu" draggable="false"></li>
   <br>
