@@ -81,49 +81,65 @@ function showSnackBar() {
   </script>
 
 <script>
-async function getRepoLastModified(owner, repo, token) {
-  const url = `https://api.github.com/repos/${owner}/${repo}`;
-  const headers = {
-      'Authorization': `token ${token}`,
-      'Accept': 'application/vnd.github.v3+json'
-  };
+    async function getRepoLastModified(owner, repo, token) {
+      const url = `https://api.github.com/repos/${owner}/${repo}`;
+      const headers = {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json'
+      };
 
-  try {
-      const response = await fetch(url, { headers });
-      if (!response.ok) {
+      try {
+        const response = await fetch(url, { headers });
+        if (!response.ok) {
           throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+        }
+        const repoData = await response.json();
+        return repoData.updated_at;
+      } catch (error) {
+        console.error('Error fetching repo data:', error);
       }
-      const repoData = await response.json();
-      return repoData.updated_at;
-  } catch (error) {
-      console.error('Error fetching repo data:', error);
-  }
-}
+    }
 
-function formatDateTime(dateTime) {
-  const options = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-  };
-  return new Date(dateTime).toLocaleString('en-US', options);
-}
+    function formatDateTime(dateTime) {
+      const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      };
+      return new Date(dateTime).toLocaleString('en-US', options);
+    }
 
-(async () => {
-  const owner = 'duzelicem';
-  const repo = 'duzelicem.com';
-  const token = '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';
+    async function fetchToken() {
+      const url = 'http://duzelicem.com/files/gh.json';
 
-  const lastModified = await getRepoLastModified(owner, repo, token);
-  if (lastModified) {
-      document.getElementById('last-modified').textContent = `Last Modified at ${formatDateTime(lastModified)}`;
-  }
-})();
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.token;
+      } catch (error) {
+        console.error('Error fetching JSON data:', error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const owner = 'duzelicem';
+      const repo = 'duzelicem.com';
+      const token = await fetchToken();
+
+      if (token) {
+        const lastModified = await getRepoLastModified(owner, repo, token);
+        if (lastModified) {
+          document.getElementById('last-modified').textContent = `Last Modified at ${formatDateTime(lastModified)}`;
+        }
+      }
+    });
 </script>
-
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <style>
