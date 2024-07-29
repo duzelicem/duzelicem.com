@@ -1,28 +1,31 @@
 {
-    "647900446664687617": [
+    "31": [
+
       {
-        "_tooltip": "Discord Staff",
-        "_badge": "https://duzelicem.com/images/discordstaff.png"
+        "tooltip": "Discord Staff",
+        "badge": "https://duzelicem.com/images/discordstaff.png"
       },
       {
-        "_tooltip": "Partnered Server Owner",
-        "_badge": "https://duzelicem.com/images/discordpartner.png"
+        "tooltip": "Partnered Server Owner",
+        "badge": "https://duzelicem.com/images/discordpartner.png"
       },
       {
-        "tooltip": "HypeSquad Events",
-        "badge": "https://duzelicem.com/images/hypesquadevents.png"
+        "tooltip": "Discord Bug Hunter",
+        "badge": "https://duzelicem.com/images/bughunterlevel2.png"
       },
       {
-        "_tooltip": "Discord Bug Hunter",
-        "_badge": "https://duzelicem.com/images/bughunterlevel2.png"
-      },
-      {
-        "_tooltip": "Early Verified Bot Developer",
-        "_badge": "https://duzelicem.com/images/earlyverifiedbotdev.png"
+        "tooltip": "Early Verified Bot Developer",
+        "badge": "https://duzelicem.com/images/earlyverifiedbotdev.png"
       },
       {
         "tooltip": "Early Supporter",
         "badge": "https://duzelicem.com/images/earlysupporter.png"
+      }
+    ],
+    "647900446664687617": [
+      {
+        "tooltip": "HypeSquad Events",
+        "badge": "https://duzelicem.com/images/hypesquadevents.png"
       }
     ],
     "660535812253024276": [
