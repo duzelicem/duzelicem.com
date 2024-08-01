@@ -1,0 +1,25 @@
+[
+    {
+        "id": "certified_moderator",
+        "description": "Moderator Programs Alumni",
+        "icon": "fee1624003e2fee35cb398e125dc479b",
+        "link": "https://discord.com/safety"
+    },
+    {
+        "id": "hypesquad",
+        "description": "HypeSquad Events",
+        "icon": "bf01d1073931f921909045f3a39fd264",
+        "link": "https://discord.com/hypesquad"
+    },
+    { 
+        "id": "golden_bug_hunter",
+        "description": "Bug Hunter",
+        "icon": "848f79194d4be5ff5f81505cbd0ce1e6",
+        "link": "https://support.discord.com/hc/en-us/articles/360046057772-Discord-Bugs"
+    },
+    {
+        "id": "verified_developer",
+        "description": "Early Verified Bot Developer",
+        "icon": "6df5892e0f35b051f8b61eace34f4967"
+    }
+]
