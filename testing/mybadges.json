@@ -1,11 +1,5 @@
 [
     {
-        "id": "partner",
-        "description": "Partnered Server Owner",
-        "icon": "3f9748e53446a137a052f3454e2de41e",
-        "link": "https://discord.com/partners"
-    },
-    {
         "id": "certified_moderator",
         "description": "Moderator Programs Alumni",
         "icon": "fee1624003e2fee35cb398e125dc479b",
@@ -16,6 +10,12 @@
         "description": "HypeSquad Events",
         "icon": "bf01d1073931f921909045f3a39fd264",
         "link": "https://discord.com/hypesquad"
+    },
+    {
+        "id": "partner",
+        "description": "Partnered Server Owner",
+        "icon": "3f9748e53446a137a052f3454e2de41e",
+        "link": "https://discord.com/partners"
     },
     {
         "id": "verified_developer",
