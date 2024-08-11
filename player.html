@@ -213,13 +213,21 @@ async function updatePlayerFromStatusJSON() {
         const applicationId = typeZeroActivity.application_id;
         const largeImage = typeZeroActivity.assets.large_image;
         const albumArtUrl = `https://cdn.discordapp.com/app-assets/${applicationId}/${largeImage}.png`;
+
         document.getElementById("player-album-art").setAttribute("src", albumArtUrl);
         document.getElementById("player-progress").style.display = "none";
         document.getElementById("player-progress-back").style.display = "none";
-        document.getElementById("nick").style.display = "none";
         document.getElementById("player-time").innerHTML = null;
 
         document.getElementById("player-song").innerHTML = typeZeroActivity.name;
+        if (typeZeroActivity.timestamps) {
+          const startTime = typeZeroActivity.timestamps.start;
+          const elapsedTime = Date.now() - startTime;
+          document.getElementById("nick").innerHTML = `${formatTime(elapsedTime)} elapsed`;
+          document.getElementById("nick").style.display = "block";
+        } else {
+          document.getElementById("nick").style.display = "none";
+        }
         if (typeZeroActivity.details) {
             document.getElementById("player-artist").innerHTML = typeZeroActivity.details;
             document.getElementById("player-artist").style.display = "block";
@@ -227,8 +235,18 @@ async function updatePlayerFromStatusJSON() {
             document.getElementById("player-artist").style.display = "none";
         }
         if (typeZeroActivity.state) {
+          if (typeZeroActivity.party) {
+            if (typeZeroActivity.party.size) {
+            document.getElementById("player-status").innerHTML = typeZeroActivity.state + " (" + typeZeroActivity.party.size[0] + " of " + typeZeroActivity.party.size[1] + ")";
+            document.getElementById("player-status").style.display = "block";
+           } else {
             document.getElementById("player-status").innerHTML = typeZeroActivity.state;
             document.getElementById("player-status").style.display = "block";
+           }
+          } else {
+            document.getElementById("player-status").innerHTML = typeZeroActivity.state;
+            document.getElementById("player-status").style.display = "block";
+          }
         } else {
             document.getElementById("player-status").style.display = "none";
         }
@@ -240,8 +258,16 @@ async function updatePlayerFromStatusJSON() {
         document.getElementById("player-progress-back").style.display = "none";
         document.getElementById("nick").style.display = "none";
         document.getElementById("player-time").innerHTML = null;
-
+        
         document.getElementById("player-song").innerHTML = `Playing ${typeZeroActivity.name}`;
+        if (typeZeroActivity.timestamps) {
+          const startTime = typeZeroActivity.timestamps.start;
+          const elapsedTime = Date.now() - startTime;
+          document.getElementById("nick").innerHTML = `${formatTime(elapsedTime)} elapsed`;
+          document.getElementById("nick").style.display = "block";
+        } else {
+          document.getElementById("nick").style.display = "none";
+        }
         if (typeZeroActivity.details) {
             document.getElementById("player-artist").innerHTML = typeZeroActivity.details;
         } else {
