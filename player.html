@@ -123,7 +123,7 @@ async function updatePlayerFromLanyard() {
     const data = await $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617");
     const spotifyData = data.data.spotify;
     const activities = data.data.activities;
-    const spotifyLogo = '<img src="https://duzelicem.com/images/spo.png" alt="Spotify Logo" draggable="false" style="width: 1.4em; vertical-align: middle;">';
+    const spotifyLogo = '<img src="https://gxkce.com/images/spo.png" alt="Spotify Logo" draggable="false" style="width: 1.4em; vertical-align: middle;">';
     const playerStatusContent = spotifyLogo + ' arda listening...';
 
     const access_token = await getAccessToken();
@@ -193,7 +193,7 @@ async function updatePlayerFromLanyard() {
 
 async function updatePlayerFromStatusJSON() {
     const data = await $.getJSON("https://api.lanyard.rest/v1/users/647900446664687617");
-    const statusData = await $.getJSON("https://duzelicem.com/discord/status.json");
+    const statusData = await $.getJSON("https://gxkce.com/discord/status.json");
     const status = statusData.data.status;
     const activities = data.data.activities;
     const onlinedata = data.data.discord_status;
