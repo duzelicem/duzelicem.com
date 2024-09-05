@@ -1,13 +1,23 @@
 function devMode1() {
-    if (!isLocalhost1()) {
-        sagTikEngel1();
-        konsolkapat1();
-        document.title = "arda";
-    }
-    else {
-        alert("You are in development mode. You can't disable dev mode on localhost.");
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (isLocalhost1()) {
+
+        document.title = "arda (Dev Mode)";
+        console.log("You are in development mode. You can't disable dev mode on localhost.");
+
+    } else if (urlParams.get('ardasexporno') === '1') {
+
+        alert("You are in development mode. Welcome, Arda.");
         console.log("Welcome, He Who Remains.");
         document.title = "arda (Dev Mode)";
+
+    } else {
+
+        konsolkapat1();
+        sagTikEngel1();
+        document.title = "arda";
+        
     }
 }
 
@@ -16,9 +26,7 @@ function isLocalhost1() {
 }
 
 function sagTikEngel1() {
-    document.addEventListener("contextmenu", function (dilosurucu) {
-        dilosurucu.preventDefault();
-    });
+    document.addEventListener("contextmenu", sagTikEngelHandler);
 }
 
 function konsolkapat1() {
@@ -29,5 +37,4 @@ function konsolkapat1() {
         }
     });
 }
-
 devMode1();
