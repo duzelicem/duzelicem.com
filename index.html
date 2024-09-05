@@ -18,16 +18,18 @@
 
   <script src="js/devmode.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-<script>
-  if (!Modernizr.svg) {
-    // SVG desteklenmiyorsa PNG'yi kullan
-    var svgImages = document.querySelectorAll('img[src$=".svg"]');
-    svgImages.forEach(function(img) {
-      img.src = img.src.replace('.svg', '.png');
-    });
-  }
-</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/svgweb/2.0.52/svg.js"></script>
+
+  <script>
+    if (!document.createElementNS || !document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect) {
+      // SVG desteklenmiyorsa PNG'ye geçiş yap
+      var svgImages = document.querySelectorAll('img[src$=".svg"]');
+      svgImages.forEach(function(img) {
+        img.src = img.src.replace('.svg', '.png');
+      });
+    }
+  </script>
+  
 
   
   <script>
