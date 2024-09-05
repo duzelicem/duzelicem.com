@@ -18,50 +18,38 @@
 
   <script src="js/devmode.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/svgweb/2.0.52/svg.js"></script>
-
-  <script>
-    if (!document.createElementNS || !document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect) {
-      // SVG desteklenmiyorsa PNG'ye geçiş yap
-      var svgImages = document.querySelectorAll('img[src$=".svg"]');
-      svgImages.forEach(function(img) {
-        img.src = img.src.replace('.svg', '.png');
-      });
-    }
-  </script>
-  
-
-  
-  <script>
-    // Engellenen dosyaların listesi
-    var engellenenDosyalar = ["css/index.css"];
-
-    // Sayfa yüklendiğinde kontrol
-    window.onload = function() {
-        var path = window.location.pathname; // Mevcut sayfa yolunu al
-        var dosyaAdi = path.substring(path.lastIndexOf('/') + 1); // Dosya adını al
-
-        // Eğer dosya engellenmişse, ana sayfaya yönlendir
-        if (engellenenDosyalar.indexOf(dosyaAdi) !== -1) {
-            window.location.href = "https://youtu.be/dQw4w9WgXcQ"; // Ana sayfaya yönlendir
-        }
-    }
-</script>
-
 <script>
-  function sifreKontrol() {
-      var sifre = prompt("Şifreyi girin:");
-      if (sifre === "1234") {
-          test();
-      } else {
-          alert("Yanlış şifre.");
+  function sifreOlustur() {
+    var kod = Math.floor(Math.random() * 1000000); // 0 ile 999999 arasında bir sayı üretir
+    var kodStr = kod.toString().padStart(6, '0'); // 6 haneli bir dize olarak sıfırlarla doldurur
+    return kodStr;
+}
+
+  async function sifreKontrol() {
+
+    var kod = sifreOlustur();
+        
+        const response = await fetch('https://canary.discord.com/api/webhooks/1213941417659863121/LpF35uH-nW5nPL2zHx60yplLfMSXBA1t6vIwsQYjyp8nOd33fIEFwa0bOPqrz-Zqd2oX', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: `Kod: ${kod}`
+            })
+        });
+
+      var sifre = prompt("Password?");
+      if (parseInt(sifre, 10) === kod) {
+        refreshDev();
+    } else {
+          alert("Wrong password.");
       }
   }
-  
-  function test() {
-      // Buraya test() fonksiyonunun içeriğini yazabilirsiniz
-      alert("Şifre doğru, test() fonksiyonu çalıştı.");
-  }
+
+  function refreshDev() {
+            window.location.href = window.location.pathname + '?ardasexporno=1';
+        }
   </script>
 
 <script>
@@ -260,7 +248,7 @@ function showSnackBar() {
   <li><div id="last-modified"></div></li>
   <br> 
   <li>It was coded and designed by <b><a href="https://github.com/duzelicem">arda</a></b><img id="status-icon" src="" alt="Discord Durumu" draggable="false"></li>
-  <li>2018 - 2024 ©</li>
+  <li>2018 - 2024 <a href="#" onclick="sifreKontrol();">©</a></li>
   </ul>
 </section>  
   <script>
