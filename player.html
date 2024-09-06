@@ -1,5 +1,4 @@
 <script src="js/devmodeforplayer.js"></script>
-<script src='js/DisableDevTool.js'></script>
 <link rel="stylesheet" href="css/player.css">
 
 <div id="page">
@@ -110,10 +109,10 @@ async function getAccessToken() {
     const response = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
         headers: {
-            Authorization: "Basic " + btoa("8c2deb9ea7564c9388f09254a2b44085:1b60001a04484177b0d02aac872ad5dd"),
+            Authorization: "Basic " + btoa("ddd5e82a9045411a8e71f06ce016ad93:0c5f43657f664001903ddd2556fa1ae2"),
             "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: "grant_type=refresh_token&refresh_token=AQD6_zYBP1fFTnnyyt3TEaqao2raRUlI4qVevoi0OyzrZOvKa_mOEFDwoK1AePL_p7Fg-ECTcl11iAqxHyC_0r7Ristk_IkA78JdRJ8CYGh6ipYeJm_3PLwN-zQn1x9YBkk",
+        body: "grant_type=refresh_token&refresh_token=AQCqnag5jhWXv_34uP1U8F85W3S8GBbbL89tCl0xQeKM8OXmgmWyzwxvbGLqMbH1JFHAeJNq4FvA3nRWmK1N0Vwo16fMbnF1c2P1bbZrwqgpeKnkpAEnRc40qMrcYdtsKSE",
     });
     const data = await response.json();
     return data.access_token;
