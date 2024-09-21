@@ -1,3 +1,5 @@
+document.title = "arda";
+
 function devMode1() {
     const urlParams = new URLSearchParams(window.location.search);
 
